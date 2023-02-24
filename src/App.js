@@ -1,18 +1,26 @@
-import { faker } from "@faker-js/faker";
 import Refresh from "./components/Refresh";
 import Result from "./components/Result";
 import { UserTyping } from "./components/UserTyping";
-const words = faker.random.words(10);
+import useEngine from "./hooks/useEngine";
+import { calculateAccuracyPercentage } from "./utils/helpers";
+
 const App = () => {
+  const { state, words, timeLeft, typed, errors, totalTyped, restart } =
+    useEngine();
   return (
     <>
-      <TimeLefts leftTime={30} />
+      <TimeLefts leftTime={timeLeft} />
       <WordContainer>
         <GeneretedWords word={words} />
-        <UserTyping userInput={words} />
+        <UserTyping userInput={typed} words={words} />
       </WordContainer>
-      <Refresh classNames={""} onRestart={() => null} />
-      <Result accuracyPercentage={100} Errors={10} Total={1000} />
+      <Refresh onRestart={() => restart} />
+      <Result
+        state={state}
+        accuracyPercentage={calculateAccuracyPercentage(errors, totalTyped)}
+        Errors={errors}
+        Total={totalTyped}
+      />
     </>
   );
 };

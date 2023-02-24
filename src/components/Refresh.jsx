@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
 import { MdRefresh } from "react-icons/md";
-function Refresh(onRestart: handleRestart, classNames) {
+function Refresh(onRestart, classNames) {
   const buttonRef = useRef(null);
   const handleClick = () => {
     buttonRef.current?.blur();
-    handleRestart();
+    onRestart();
   };
   return (
     <button

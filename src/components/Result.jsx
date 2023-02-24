@@ -1,10 +1,14 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { formatPercentage } from "../utils/helpers";
-const Result = ({ accuracyPercentage, Errors, Total }) => {
+const Result = ({ accuracyPercentage, Errors, Total, state }) => {
   const initial = { opacity: 0 };
   const animate = { opacity: 1 };
   const duration = { duration: 0.3 };
+
+  if (state !== "finish") {
+    return null;
+  }
   return (
     <motion.ul className="flex flex-col items-center text-primary space-y-3">
       <motion.li
