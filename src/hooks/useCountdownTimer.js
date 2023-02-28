@@ -2,25 +2,28 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 const useCountdownTimer = (seconds) => {
   const [timeLeft, setTimeLeft] = useState(seconds);
-  const initialRef = useRef(null);
+  const intervalRef = useRef(null);
   const startCountdown = useCallback(() => {
     console.log("starting...");
-    initialRef.current = setInterval(() => {
+
+    intervalRef.current = setInterval(() => {
       setTimeLeft((timeLeft) => timeLeft - 1);
     }, 1000);
   }, [setTimeLeft]);
+
   const resetCountdown = useCallback(() => {
-    if (initialRef) {
-      clearInterval(initialRef.current);
-      setTimeLeft(seconds);
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
     }
+
+    setTimeLeft(seconds);
   }, [seconds]);
 
   useEffect(() => {
-    if (!timeLeft && initialRef.current) {
-      clearInterval(initialRef.current);
+    if (!timeLeft && intervalRef.current) {
+      clearInterval(intervalRef.current);
     }
-  }, [timeLeft, initialRef]);
+  }, [timeLeft, intervalRef]);
 
   return { timeLeft, startCountdown, resetCountdown };
 };

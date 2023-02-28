@@ -6,9 +6,6 @@ const Result = ({ accuracyPercentage, Errors, Total, state }) => {
   const animate = { opacity: 1 };
   const duration = { duration: 0.3 };
 
-  if (state !== "finish") {
-    return null;
-  }
   return (
     <motion.ul className="flex flex-col items-center text-primary space-y-3">
       <motion.li

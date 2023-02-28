@@ -12,17 +12,21 @@ const isKeyboardCodeAllowed = (code) => {
 const useTypings = (enable) => {
   const [cursor, setCursor] = useState(0);
   const [typed, setTyped] = useState("");
-
   const totalTyped = useRef(0);
+
   const keydownHandler = useCallback(
     ({ key, code }) => {
       if (!enable || !isKeyboardCodeAllowed(code)) {
         return;
       }
+
       switch (key) {
         case "Backspace":
           setTyped((prev) => prev.slice(0, -1));
           setCursor(cursor - 1);
+          if (totalTyped.current <= 0) {
+            totalTyped.current = 1;
+          }
           totalTyped.current -= 1;
           break;
         default:
@@ -33,6 +37,7 @@ const useTypings = (enable) => {
     },
     [cursor, enable]
   );
+
   const resetTotalTyped = useCallback(() => {
     totalTyped.current = 0;
   }, []);
@@ -41,6 +46,7 @@ const useTypings = (enable) => {
     setTyped("");
     setCursor(0);
   }, []);
+
   useEffect(() => {
     window.addEventListener("keydown", keydownHandler);
     return () => {

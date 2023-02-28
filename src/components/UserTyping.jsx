@@ -4,7 +4,7 @@ import cn from "classnames";
 
 export const UserTyping = ({ userInput, words }) => {
   const typedCharacters = userInput.split("");
-  console.log(typedCharacters);
+
   return (
     <div className="absolute inset-0">
       {typedCharacters.map((char, index) => {

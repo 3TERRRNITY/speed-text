@@ -1,13 +1,12 @@
-import React from "react";
-
 export const formatPercentage = (percentage) => {
   return percentage.toFixed(0) + "%";
 };
 
 export const countErrors = (actual, expected) => {
   const expectedCharacters = expected.split("");
+
   return expectedCharacters.reduce(({ errors, expectedChar, i }) => {
-    const actualChar = actual[i];
+    let actualChar = actual[i];
     if (actualChar !== expectedChar) {
       errors++;
     }

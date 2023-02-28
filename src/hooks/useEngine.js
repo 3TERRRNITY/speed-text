@@ -12,7 +12,6 @@ const useEngine = () => {
   const { words, updateWords } = useWords(NUMBER_OF_WORDS);
   const { timeLeft, startCountdown, resetCountdown } =
     useCountdownTimer(COUNTDOWN_SECONDS);
-
   const { typed, cursor, clearTyped, resetTotalTyped, totalTyped } = useTypings(
     state !== "finish"
   );
@@ -38,21 +37,13 @@ const useEngine = () => {
       sumErrors();
     }
   }, [timeLeft, sumErrors]);
+
   useEffect(() => {
     if (areWordsFinished) {
-      sumErrors();
       updateWords();
       clearTyped();
     }
-  }, [
-    cursor,
-    words,
-    clearTyped,
-    typed,
-    areWordsFinished,
-    updateWords,
-    sumErrors,
-  ]);
+  }, [cursor, words, clearTyped, typed, areWordsFinished, updateWords]);
 
   const restart = useCallback(() => {
     resetCountdown();
@@ -62,6 +53,7 @@ const useEngine = () => {
     updateWords();
     clearTyped();
   }, [clearTyped, updateWords, resetCountdown, resetTotalTyped]);
+
   return { state, words, timeLeft, typed, errors, totalTyped, restart };
 };
 
